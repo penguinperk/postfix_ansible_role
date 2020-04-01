@@ -1,0 +1,39 @@
+---
+# tasks file for postfix_ansible_role
+
+#install
+- name: Installing Postfix
+  pkgng: name=postfix state=present cached=yes
+
+- name: add Postfix to rc.conf
+  sysrc: name=postfix_enable value=YES
+
+- name: Disable sendmail in rc.conf
+  sysrc: name=sendmail_enable value=NO
+
+- name: Disable sendmail submit in rc.conf
+  sysrc: name=sendmail_submit_enable value=NO
+
+- name: Disable sendmail outbound in rc.conf
+  sysrc: name=sendmail_outbound_enable value=NO
+
+- name: Disable sendmail msp queue in rc.conf
+  sysrc: name=sendmail_msp_queue_enable value=NO
+
+- name: Stop Sendmail
+  service: name=sendmail state=stopped
+
+- name: Start Postfix
+  service: name=postfix state=started
+
+#configure
+- name: Setup mail main.cf file
+  copy:
+    src: files/postfix_main.cf
+    dest: /usr/local/etc/postfix/main.cf
+    owner: root
+    group: wheel
+    mode: 644
+    backup: yes
+  notify:
+    - Restart Postfix

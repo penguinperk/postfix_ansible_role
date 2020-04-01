@@ -1,0 +1,48 @@
+# The default_privs parameter specifies the default rights used by
+# the local delivery agent for delivery to external file or command.
+# These rights are used in the absence of a recipient user context.
+
+# newaliases_path: The full pathname of the Postfix newaliases command.
+# This is the Sendmail-compatible command to build alias databases.
+#
+newaliases_path = /usr/local/bin/newaliases
+
+# mailq_path: The full pathname of the Postfix mailq command.  This
+# is the Sendmail-compatible mail queue listing command.
+#
+mailq_path = /usr/local/bin/mailq
+
+# setgid_group: The group for mail submission and queue management
+# commands.  This must be a group name with a numerical group ID that
+# is not shared with other accounts, not even with the Postfix account.
+#
+setgid_group = maildrop
+
+# html_directory: The location of the Postfix HTML documentation.
+#
+html_directory = /usr/local/share/doc/postfix
+
+# manpage_directory: The location of the Postfix on-line manual pages.
+#
+manpage_directory = /usr/local/man
+
+# sample_directory: The location of the Postfix sample configuration files.
+# This parameter is obsolete as of Postfix 2.1.
+#
+sample_directory = /usr/local/etc/postfix
+
+# readme_directory: The location of the Postfix README files.
+#
+readme_directory = /usr/local/share/doc/postfix
+inet_protocols = ipv4
+meta_directory = /usr/local/libexec/postfix
+shlib_directory = /usr/local/lib/postfix
+
+
+mydomain = penguinnorth.com
+myorigin = penguinnorth.com
+masquerade_domains = penguinnorth.com
+mydestination = mail.pn.com, vpn, localhost.localdomain, localhost
+relayhost = vpn.pn.com
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated reject_unauth_destination
+#
